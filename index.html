@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>APP Lista Compra con VUE</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/mi.css">
+  </head>
+  <body>
+    <div class="container miestilo" id="contenedor">
+      <div class="row cabecera justify-content-center mt-5" id="cabecera">
+        <h1 id="titulo1">
+          <i class="material-icons" style="font-size: 1em">shopping_cart</i>
+          {{ titulo }}
+        </h1>
+      </div>
+      <form id="formulario">
+        <div id="botones" class="row container form-group">
+          <div class="col-5">
+            <input
+              type="text"
+              v-model="articulo"            
+              class="form-control"
+              placeholder="Indica un Articulo a comprar"
+            />
+          </div>
+          <div class="col-3">
+            <input
+              type="number"
+              class="form-control"
+              v-model="cantidad"
+              placeholder="Cantidad"
+            />
+          </div>
+          <div class="col-2">
+            <select class="form-control" v-model="prioridad">
+              <option value="Baja" selected>Baja</option>
+              <option value="Alta">Alta</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <button id="agregar" class="btn btn-primary form-control" v-bind:disabled="articulo.length === 0" v-on:click.prevent="Agregar">
+              Añadir
+            </button>
+          </div>
+        </div>
+      </form>
+      <div
+        id="listacompra"
+        class="listacompra rounded"
+        style="padding: 15px; background-color: aquamarine"
+      >
+      <template v-if="listado.length === 0">
+        <div class="alert alert-danger no-seleccionable">
+          <i class="material-icons align-middle">list</i> No hay Articulos que comprar
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div v-for="item in listado" v-bind:class="['alert', 'alert-success', 'no-seleccionable', item.estado ? 'opacidad' : '' ]">
+        <i class="material-icons align-middle">list</i>
+        <b>{{item.art}}</b>
+        <span class="badge badge-primary">{{item.can}}</span>
+        <span style="padding: 10px;  background-color: orange; border-radius: 10%">
+          {{item.pri}}</span>
+        <span id="identificador" style="display: none">{{item.id}}</span>
+        <i v-on:click="Eliminar(item)" class="material-icons align-middle float-right"
+          style="font-size: 1.5em; cursor: pointer">delete</i>
+        <i v-on:click="CambiarEstado(item)" v-bind:class="['material-icons', 'align-middle', 'float-right', item.estado ? 'mired' : 'iconos']"         
+          style="font-size: 1.5em; cursor: pointer;">check_circle</i>
+        </div>
+      </template>
+
+      <div id="barraprogreso" class="progress mt-2" style="height: 25px;">
+        <div class="progress-bar" role="progressbar" 
+        v-bind:style="{'width' : PorcentajeTantoPorCien }"; 
+        v-bind:aria-valuenow="Porcentaje" aria-valuemin="0" aria-valuemax="100">
+        {{porcentaje}}
+        </div>        
+      </div>
+      </div>
+      <pre>{{$data}}</pre>
+    </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
