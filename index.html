@@ -66,10 +66,9 @@
         style="padding: 15px; background-color: aquamarine"
       >
         <template v-if="listado.length === 0">
-          <div class="alert alert-danger">
-            <i class="material-icons align-middle">list</i> No hay Articulos que
-            comprar
-          </div>
+          <mensaje-error
+            >No hay artículos que Comprar por ahora...</mensaje-error
+          >
         </template>
         <template v-else>
           <div
@@ -100,21 +99,33 @@
           </div>
         </template>
       </div>
+      <barra-progreso
+        v-show="listado.length > 0"
+        v-bind:porcentaje="Porcentaje"
+      ></barra-progreso>
+      <!-- <pre>{{ $data }}</pre> -->
+    </div>
+
+    <template id="plantilla-barra-progreso">
       <div id="barraprogreso" class="progress mt-2" style="height: 25px;">
         <div
-          v-show="listado.length > 0"
           class="progress-bar"
           role="progressbar"
-          v-bind:style="{ 'width' : PorcentajeEnTantoPorCien }"
-          v-bind:aria-valuenow="Porcentaje"
+          v-bind:style="{ 'width' : porcentaje + '%'}"
+          v-bind:aria-valuenow="porcentaje"
           aria-valuemin="0"
           aria-valuemax="100"
         >
-          {{ Porcentaje }}
+          {{ porcentaje }}
         </div>
       </div>
-      <!-- <pre>{{ $data }}</pre> -->
-    </div>
+    </template>
+    <template id="plantilla-mensaje-error">
+      <div class="alert alert-danger">
+        <i class="material-icons align-middle">list</i> <slot></slot>
+      </div>
+    </template>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="./js/main.js"></script>
   </body>
