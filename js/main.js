@@ -1,7 +1,7 @@
 const miapp = new Vue({
   el: "#contenedor",
   data: {
-    titulo: "Lista de la Compra",
+    titulo: "Lista de la Compra con Vue.js",
     articulo: "",
     cantidad: 0,
     prioridad: "Baja",
@@ -9,15 +9,15 @@ const miapp = new Vue({
   },
   computed: {
     ComprasHechas() {
-      return this.listado().filter(elemento => elemento.estado);
+      return this.listado.filter(elemento => elemento.estado);
     },
     Porcentaje() {
       return ((this.ComprasHechas.length * 100) / this.listado.length).toFixed(
         2
       );
     },
-    PorcentajeTantoPorCien() {
-      this.Porcentaje.toString() + "%";
+    PorcentajeEnTantoPorCien() {
+      return this.Porcentaje.toString() + "%";
     }
   },
   methods: {
