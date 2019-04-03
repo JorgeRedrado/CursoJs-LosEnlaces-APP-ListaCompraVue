@@ -71,32 +71,14 @@
           >
         </template>
         <template v-else>
-          <div
+          <!--@clickcheck = v-on:clickcheck-->
+          <elemento-compra
+            @clickcheck="CambiarEstado(item)"
+            @clickborrar="Eliminar(item)"
             v-for="item in listado"
-            v-bind:class="['noseleccionable', 'alert', 'alert-success', item.estado ? 'opacidad' : '']"
+            :producto="item"
           >
-            <i class="material-icons align-middle">list</i>
-            <b>{{ item.art }}</b>
-            <span class="badge badge-primary"> {{ item.can }}</span>
-            <span
-              style="padding: 10px;  background-color: orange; border-radius: 10%"
-            >
-              {{ item.pri }}
-            </span>
-            <span id="identificador" style="display: none">{{ item.id }}</span>
-            <i
-              v-on:click="Eliminar(item)"
-              class="material-icons align-middle float-right"
-              style="font-size: 1.5em; cursor: pointer"
-              >delete
-            </i>
-            <i
-              v-on:click="CambiarEstado(item)"
-              v-bind:class="['material-icons', 'align-middle', 'float-right', item.estado ? 'mired' : 'miamarillo' ]"
-              style="font-size: 1.5em; cursor: pointer;"
-              >check_circle</i
-            >
-          </div>
+          </elemento-compra>
         </template>
       </div>
       <barra-progreso
@@ -120,9 +102,38 @@
         </div>
       </div>
     </template>
+
     <template id="plantilla-mensaje-error">
       <div class="alert alert-danger">
         <i class="material-icons align-middle">list</i> <slot></slot>
+      </div>
+    </template>
+
+    <template id="plantilla-elemento-compra">
+      <div
+        v-bind:class="['noseleccionable', 'alert', 'alert-success', producto.estado ? 'opacidad' : '']"
+      >
+        <i class="material-icons align-middle">list</i>
+        <b>{{ producto.art }}</b>
+        <span class="badge badge-primary"> {{ producto.can }}</span>
+        <span
+          style="padding: 10px;  background-color: orange; border-radius: 10%"
+        >
+          {{ producto.pri }}
+        </span>
+        <span id="identificador" style="display: none">{{ producto.id }}</span>
+        <i
+          @click="EliminarElemento"
+          class="material-icons align-middle float-right"
+          style="font-size: 1.5em; cursor: pointer"
+          >delete
+        </i>
+        <i
+          @click="CambiarEstilo"
+          v-bind:class="['material-icons', 'align-middle', 'float-right', producto.estado ? 'mired' : 'miamarillo' ]"
+          style="font-size: 1.5em; cursor: pointer;"
+          >check_circle</i
+        >
       </div>
     </template>
 

@@ -1,12 +1,23 @@
 Vue.component("mensaje-error", {
-  /* HTML */
   template: "#plantilla-mensaje-error"
 });
 
 Vue.component("barra-progreso", {
-  /* HTML */
   template: "#plantilla-barra-progreso",
   props: ["porcentaje"]
+});
+
+Vue.component("elemento-compra", {
+  template: "#plantilla-elemento-compra",
+  methods: {
+    CambiarEstilo() {
+      this.$emit("clickcheck");
+    },
+    EliminarElemento() {
+      this.$emit("clickborrar");
+    }
+  },
+  props: ["producto"]
 });
 
 const miapp = new Vue({
