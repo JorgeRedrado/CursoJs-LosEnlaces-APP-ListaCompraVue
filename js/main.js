@@ -1,3 +1,5 @@
+const listadoGlobal = [];
+
 Vue.component("mensaje-error", {
   template: "#plantilla-mensaje-error"
 });
@@ -79,16 +81,25 @@ const ListadoComprasRealizadas = Vue.component(
   {
     data() {
       return {
-        titulo: "Lista de Compras Realizadas"
+        titulo: "Lista de Compras Realizadas",
+        listado: ListadoGlobal
       };
+    },
+    computed: {
+      ListadoHechas() {
+        return this.listado.filter(item => item.estado);
+      }
     },
     /*HTML*/
     template: `
+    <div>
     <div class="row cabecera justify-content-center mt-5" id="cabecera">
     <h1 id="titulo1">
       <i class="material-icons" style="font-size: 1em">shopping_cart</i>
       {{ titulo }}
     </h1>
+  </div>
+  <elemento-compra v-for="(articulo, index) in ListadoHechas" key="index" producto="articulo"></elemento-compra>
   </div>
   `
   }
