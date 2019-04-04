@@ -17,3 +17,17 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+a {
+  text-decoration: none !important;
+}
+
+.minav {
+  background-color: aquamarine;
+}
+
+.activo {
+  background-color: yellow;
+  color: blueviolet;
+  font-size: 1.2em;
+}

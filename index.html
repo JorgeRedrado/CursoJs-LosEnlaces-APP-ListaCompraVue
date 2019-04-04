@@ -17,74 +17,31 @@
   </head>
   <body>
     <div class="container miestilo" id="contenedor">
-      <div class="row cabecera justify-content-center mt-5" id="cabecera">
-        <h1 id="titulo1">
-          <i class="material-icons" style="font-size: 1em">shopping_cart</i>
-          {{ titulo }}
-        </h1>
-      </div>
-      <form id="formulario">
-        <div id="botones" class="row container form-group">
-          <div class="col-5">
-            <input
-              type="text"
-              v-model="articulo"
-              class="form-control"
-              placeholder="Indica un Articulo a comprar"
-            />
-          </div>
-          <div class="col-3">
-            <input
-              type="number"
-              class="form-control"
-              v-model="cantidad"
-              placeholder="Cantidad"
-            />
-          </div>
-          <div class="col-2">
-            <select class="form-control" v-model="prioridad">
-              <option value="Baja" selected>Baja</option>
-              <option value="Alta">Alta</option>
-              <option value="Urgente">Urgente</option>
-            </select>
-          </div>
-          <div class="col-2">
-            <button
-              id="agregar"
-              class="btn btn-primary form-control"
-              v-bind:disabled="articulo.length === 0"
-              v-on:click.prevent="Agregar"
-            >
-              Añadir
-            </button>
-          </div>
+      <div class="row justify-content-center mt-5">
+        <div class="col-3 text-center">
+          <router-link to="/" exact>
+            <!--Exact para que sea la barra exacta / y no lo confunda con otro enlace-->
+            <div class="minav rounded p-2 mx-3" active-class="activo">
+              Home
+            </div>
+          </router-link>
         </div>
-      </form>
-      <div
-        id="listacompra"
-        class="listacompra rounded"
-        style="padding: 15px; background-color: aquamarine"
-      >
-        <template v-if="listado.length === 0">
-          <mensaje-error
-            >No hay artículos que Comprar por ahora...</mensaje-error
-          >
-        </template>
-        <template v-else>
-          <!--@clickcheck = v-on:clickcheck-->
-          <elemento-compra
-            @clickcheck="CambiarEstado(item)"
-            @clickborrar="Eliminar(item)"
-            v-for="item in listado"
-            :producto="item"
-          >
-          </elemento-compra>
-        </template>
+        <div class="col-3 text-center">
+          <router-link to="/ComprasRealizadas">
+            <div class="minav rounded p-2 mx-3" active-class="activo">
+              Compras Realizadas
+            </div>
+          </router-link>
+        </div>
+        <div class="col-3 text-center">
+          <router-link to="/AcercaDe">
+            <div class="minav rounded p-2 mx-3" active-class="activo">
+              Acerca De...
+            </div>
+          </router-link>
+        </div>
       </div>
-      <barra-progreso
-        v-show="listado.length > 0"
-        v-bind:porcentaje="Porcentaje"
-      ></barra-progreso>
+      <router-view></router-view>
       <!-- <pre>{{ $data }}</pre> -->
     </div>
 
@@ -137,7 +94,81 @@
       </div>
     </template>
 
+    <template id="t-listado-compra">
+      <div>
+        <div class="row cabecera justify-content-center mt-5" id="cabecera">
+          <h1 id="titulo1">
+            <i class="material-icons" style="font-size: 1em">shopping_cart</i>
+            {{ titulo }}
+          </h1>
+        </div>
+        <form id="formulario">
+          <div id="botones" class="row container form-group">
+            <div class="col-5">
+              <input
+                type="text"
+                v-model="articulo"
+                class="form-control"
+                placeholder="Indica un Articulo a comprar"
+              />
+            </div>
+            <div class="col-3">
+              <input
+                type="number"
+                class="form-control"
+                v-model="cantidad"
+                placeholder="Cantidad"
+              />
+            </div>
+            <div class="col-2">
+              <select class="form-control" v-model="prioridad">
+                <option value="Baja" selected>Baja</option>
+                <option value="Alta">Alta</option>
+                <option value="Urgente">Urgente</option>
+              </select>
+            </div>
+            <div class="col-2">
+              <button
+                id="agregar"
+                class="btn btn-primary form-control"
+                v-bind:disabled="articulo.length === 0"
+                v-on:click.prevent="Agregar"
+              >
+                Añadir
+              </button>
+            </div>
+          </div>
+        </form>
+        <div
+          id="listacompra"
+          class="listacompra rounded"
+          style="padding: 15px; background-color: aquamarine"
+        >
+          <template v-if="listado.length === 0">
+            <mensaje-error
+              >No hay artículos que Comprar por ahora...</mensaje-error
+            >
+          </template>
+          <template v-else>
+            <!--@clickcheck = v-on:clickcheck-->
+            <elemento-compra
+              @clickcheck="CambiarEstado(item)"
+              @clickborrar="Eliminar(item)"
+              v-for="item in listado"
+              :producto="item"
+            >
+            </elemento-compra>
+          </template>
+        </div>
+        <barra-progreso
+          v-show="listado.length > 0"
+          v-bind:porcentaje="Porcentaje"
+        ></barra-progreso>
+      </div>
+    </template>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
